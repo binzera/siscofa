@@ -13,8 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -24,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="raca_gado")
 @NamedQuery(name="RacaGado.findAll", query="SELECT r FROM RacaGado r")
+//ß@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@racaId")
 public class RacaGado extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -36,8 +40,8 @@ public class RacaGado extends AbstractTimestampEntity implements Serializable {
 	private String nome;
 
 	//bi-directional many-to-one association to LoteGado
-	@JsonIgnore
 	@OneToMany(mappedBy="racaGado")
+	@JsonManagedReference
 	private List<LoteGado> loteGados;
 
 	public RacaGado() {

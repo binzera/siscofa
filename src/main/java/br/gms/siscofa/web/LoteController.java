@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.gms.siscofa.infra.web.Resultado;
+import br.gms.siscofa.model.Fazenda;
 import br.gms.siscofa.model.LoteGado;
 import br.gms.siscofa.model.Usuario;
 import br.gms.siscofa.model.repository.LoteRepository;
@@ -33,9 +34,15 @@ public class LoteController {
 		return new Resultado(loteOk, mensagem);
 	}
 	
-	@RequestMapping(value="/porUsuario" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/porUsuario" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public Resultado getlotesOfUser(Usuario user) {
 		return new Resultado(loteRepository.getLotesDoUsuario(user));
+	}
+	
+	@RequestMapping(value="/porFazenda" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public Resultado getlotesOfFazenda(Fazenda faz) {
+		return new Resultado(loteRepository.getLotesDaFazenda(faz));
 	}
 }
