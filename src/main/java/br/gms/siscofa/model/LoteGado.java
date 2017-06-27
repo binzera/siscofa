@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 
@@ -30,9 +31,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name="lote_gado")
 @NamedQuery(name="LoteGado.findAll", query="SELECT l FROM LoteGado l")
-//@JsonIdentityInfo(
-//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-//		  property = "id")
+//ß@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@loteId")
 public class LoteGado extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -54,19 +53,23 @@ public class LoteGado extends AbstractTimestampEntity implements Serializable {
 
 	//bi-directional many-to-one association to Fazenda
 	@ManyToOne
+	@JsonBackReference
 	private Fazenda fazenda;
 
 	//bi-directional many-to-one association to Idade
 	@ManyToOne
+	@JsonBackReference
 	private Idade idade;
 
 	//bi-directional many-to-one association to RacaGado
 	@ManyToOne
 	@JoinColumn(name="raca_gado_id")
+	@JsonBackReference
 	private RacaGado racaGado;
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
+	@JsonBackReference
 	private Usuario usuario;
 
 	//bi-directional many-to-one association to MovimentacaoGado

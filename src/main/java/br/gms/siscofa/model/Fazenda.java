@@ -1,6 +1,5 @@
 package br.gms.siscofa.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,14 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 
@@ -31,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 @NamedQuery(name="Fazenda.findAll", query="SELECT f FROM Fazenda f")
-@JsonAutoDetect
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@fazendaId",scope=Fazenda.class)
 public class Fazenda extends AbstractTimestampEntity{
 	private static final long serialVersionUID = 1L;
 
@@ -50,15 +48,17 @@ public class Fazenda extends AbstractTimestampEntity{
 	
 	//bi-directional many-to-one association to MovimentacaoGado
 	@OneToMany(mappedBy="fazenda", fetch=FetchType.LAZY)
+	@JsonManagedReference
 	private List<MovimentacaoGado> movimentacaoGados;
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
+	@JsonBackReference
 	private Usuario usuario;
 
 	//bi-directional many-to-one association to LoteGado
 	@OneToMany(mappedBy="fazenda", fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference
 	private List<LoteGado> loteGados;
 
 	public Fazenda() {

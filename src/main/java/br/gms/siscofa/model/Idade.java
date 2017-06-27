@@ -12,7 +12,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 
@@ -22,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @NamedQuery(name="Idade.findAll", query="SELECT i FROM Idade i")
+//ß@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@idadeId")
 public class Idade extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

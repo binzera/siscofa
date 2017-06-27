@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name="movimentacao_gado")
 @NamedQuery(name="MovimentacaoGado.findAll", query="SELECT m FROM MovimentacaoGado m")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@movimentId")
 public class MovimentacaoGado extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -47,11 +50,13 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 	//bi-directional many-to-one association to LoteGado
 	@ManyToOne
 	@JoinColumn(name="lote_gado_id")
+	@JsonBackReference
 	private LoteGado loteGado;
 	
 	//bi-directional many-to-one association to Fazenda
 	@ManyToOne
 	@JoinColumn(name="fazenda_id")
+	@JsonBackReference
 	private Fazenda fazenda;
 
 	//bi-directional many-to-one association to TipoMovimentacao

@@ -15,8 +15,10 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
+//ß@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@usuarioId",scope=Usuario.class)
 public class Usuario extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,12 +48,12 @@ public class Usuario extends AbstractTimestampEntity implements Serializable {
 
 	//bi-directional many-to-one association to Fazenda
 	@OneToMany(mappedBy="usuario",fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference
 	private List<Fazenda> fazendas;
 
 	//bi-directional many-to-one association to LoteGado
 	@OneToMany(mappedBy="usuario", fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference
 	private List<LoteGado> loteGados;
 
 	//bi-directional many-to-one association to MovimentacaoGado
