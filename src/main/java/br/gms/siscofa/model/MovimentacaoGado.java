@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 
 
@@ -21,9 +24,6 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
-
 	@Temporal(TemporalType.DATE)
 	private Date data;
 
@@ -33,20 +33,19 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 
 	private int quantidade;
 
-	private String sexo;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated;
+	private Character sexo;
 
 	private double valor;
 
 	//bi-directional many-to-one association to Fazenda
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference
 	private Fazenda fazenda;
 
 	//bi-directional many-to-one association to TipoMovimentacao
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipo_movimentacao_id")
+	@JsonBackReference
 	private TipoMovimentacao tipoMovimentacao;
 
 	public MovimentacaoGado() {
@@ -58,14 +57,6 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Date getCreated() {
-		return this.created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
 	}
 
 	public Date getData() {
@@ -100,20 +91,12 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 		this.quantidade = quantidade;
 	}
 
-	public String getSexo() {
+	public Character getSexo() {
 		return this.sexo;
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(Character sexo) {
 		this.sexo = sexo;
-	}
-
-	public Date getUpdated() {
-		return this.updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
 	}
 
 	public double getValor() {

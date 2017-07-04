@@ -13,6 +13,7 @@ import br.gms.siscofa.infra.web.Resultado;
 import br.gms.siscofa.model.Fazenda;
 import br.gms.siscofa.model.Usuario;
 import br.gms.siscofa.model.repository.FazendaRepository;
+import br.gms.siscofa.model.repository.UsuarioRepository;
 
 
 @Service
@@ -20,6 +21,9 @@ public class FazendaService {
 
 	@Autowired
 	FazendaRepository fazendaReporitory;
+	
+	@Autowired
+	private UsuarioRepository usuarioDao;
 
 	public FazendaService(FazendaRepository repository) {
 		super();
@@ -71,6 +75,7 @@ public class FazendaService {
 	}
 	
 	public List<Fazenda> getFazendasUsuario(Usuario user) {
+		user = usuarioDao.consultarPorId(user.getId());
 		List<Fazenda> lista = fazendaReporitory.findByUserId(user);
 		return lista;
 	}

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 
@@ -14,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name="tipo_movimentacao")
 @NamedQuery(name="TipoMovimentacao.findAll", query="SELECT t FROM TipoMovimentacao t")
-public class TipoMovimentacao extends AbstractTimestampEntity implements Serializable {
+public class TipoMovimentacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -25,6 +27,7 @@ public class TipoMovimentacao extends AbstractTimestampEntity implements Seriali
 
 	//bi-directional many-to-one association to MovimentacaoGado
 	@OneToMany(mappedBy="tipoMovimentacao")
+	@JsonManagedReference
 	private List<MovimentacaoGado> movimentacaoGados;
 
 	public TipoMovimentacao() {

@@ -41,7 +41,7 @@ public class FazendaController {
 		return fazendaService.cadastrarFazenda(entity);
 	}
 	
-	@RequestMapping(value="/fazendasOfUser" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/fazendasOfUser" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public Resultado getFazendasUser(Usuario user) {
 		return new Resultado(fazendaService.getFazendasUsuario(user));

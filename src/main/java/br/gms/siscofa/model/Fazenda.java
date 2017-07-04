@@ -2,6 +2,10 @@ package br.gms.siscofa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,23 +23,19 @@ public class Fazenda extends AbstractTimestampEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
-
 	private String nome;
 
 	@Column(name="qtd_alqueires")
 	private int qtdAlqueires;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated;
-
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference
 	private Usuario usuario;
 
 	//bi-directional many-to-one association to MovimentacaoGado
 	@OneToMany(mappedBy="fazenda")
+	@JsonManagedReference
 	private List<MovimentacaoGado> movimentacaoGados;
 
 	public Fazenda() {
@@ -47,14 +47,6 @@ public class Fazenda extends AbstractTimestampEntity implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Date getCreated() {
-		return this.created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
 	}
 
 	public String getNome() {
@@ -71,14 +63,6 @@ public class Fazenda extends AbstractTimestampEntity implements Serializable {
 
 	public void setQtdAlqueires(int qtdAlqueires) {
 		this.qtdAlqueires = qtdAlqueires;
-	}
-
-	public Date getUpdated() {
-		return this.updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
 	}
 
 	public Usuario getUsuario() {
