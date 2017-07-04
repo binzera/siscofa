@@ -2,22 +2,9 @@ package br.gms.siscofa.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-
+import java.util.Date;
 
 
 /**
@@ -27,96 +14,122 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name="movimentacao_gado")
 @NamedQuery(name="MovimentacaoGado.findAll", query="SELECT m FROM MovimentacaoGado m")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@movimentId")
 public class MovimentacaoGado extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="MOVIMENTACAO_GADO_ID_GENERATOR", sequenceName="MOVIMENTACAO_SEQUENCE", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="MOVIMENTACAO_GADO_ID_GENERATOR")
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 
-	@Column(name="qtd_arrobas")
-	private Integer qtdArrobas;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;
 
-	@Column(name="qtd_gado")
-	private Integer qtdGado;
+	@Temporal(TemporalType.DATE)
+	private Date data;
 
-	private char sexo;
+	private int idade;
 
-	@Column(name="valor_arroba")
-	private float valorArroba;
+	private double peso;
 
-	//bi-directional many-to-one association to LoteGado
-	@ManyToOne
-	@JoinColumn(name="lote_gado_id")
-	@JsonBackReference
-	private LoteGado loteGado;
-	
+	private int quantidade;
+
+	private String sexo;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated;
+
+	private double valor;
+
 	//bi-directional many-to-one association to Fazenda
-	@ManyToOne
-	@JoinColumn(name="fazenda_id")
-	@JsonBackReference
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Fazenda fazenda;
 
 	//bi-directional many-to-one association to TipoMovimentacao
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipo_movimentacao_id")
 	private TipoMovimentacao tipoMovimentacao;
-
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	private Usuario usuario;
 
 	public MovimentacaoGado() {
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Integer getQtdArrobas() {
-		return this.qtdArrobas;
+	public Date getCreated() {
+		return this.created;
 	}
 
-	public void setQtdArrobas(Integer qtdArrobas) {
-		this.qtdArrobas = qtdArrobas;
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
-	public Integer getQtdGado() {
-		return this.qtdGado;
+	public Date getData() {
+		return this.data;
 	}
 
-	public void setQtdGado(Integer qtdGado) {
-		this.qtdGado = qtdGado;
+	public void setData(Date data) {
+		this.data = data;
 	}
 
-	public char getSexo() {
+	public int getIdade() {
+		return this.idade;
+	}
+
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
+
+	public double getPeso() {
+		return this.peso;
+	}
+
+	public void setPeso(double peso) {
+		this.peso = peso;
+	}
+
+	public int getQuantidade() {
+		return this.quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public String getSexo() {
 		return this.sexo;
 	}
 
-	public void setSexo(char sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
-	public float getValorArroba() {
-		return this.valorArroba;
+	public Date getUpdated() {
+		return this.updated;
 	}
 
-	public void setValorArroba(float valorArroba) {
-		this.valorArroba = valorArroba;
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
-	public LoteGado getLoteGado() {
-		return this.loteGado;
+	public double getValor() {
+		return this.valor;
 	}
 
-	public void setLoteGado(LoteGado loteGado) {
-		this.loteGado = loteGado;
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+	public Fazenda getFazenda() {
+		return this.fazenda;
+	}
+
+	public void setFazenda(Fazenda fazenda) {
+		this.fazenda = fazenda;
 	}
 
 	public TipoMovimentacao getTipoMovimentacao() {
@@ -125,28 +138,6 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 
 	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
 		this.tipoMovimentacao = tipoMovimentacao;
-	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	/**
-	 * @return the fazenda
-	 */
-	public Fazenda getFazenda() {
-		return fazenda;
-	}
-
-	/**
-	 * @param fazenda the fazenda to set
-	 */
-	public void setFazenda(Fazenda fazenda) {
-		this.fazenda = fazenda;
 	}
 
 }

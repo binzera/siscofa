@@ -1,18 +1,10 @@
 package br.gms.siscofa.model;
 
 import java.io.Serializable;
+
+import javax.persistence.*;
+
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -26,9 +18,8 @@ public class TipoMovimentacao extends AbstractTimestampEntity implements Seriali
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIPO_MOVIMENTACAO_ID_GENERATOR", sequenceName="TIPO_MOVIMENTACAO_SEQUENCE", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="TIPO_MOVIMENTACAO_ID_GENERATOR")
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 
 	private String descricao;
 
@@ -39,11 +30,11 @@ public class TipoMovimentacao extends AbstractTimestampEntity implements Seriali
 	public TipoMovimentacao() {
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

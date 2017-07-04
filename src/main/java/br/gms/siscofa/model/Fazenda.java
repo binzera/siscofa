@@ -1,26 +1,9 @@
 package br.gms.siscofa.model;
 
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-
-
 
 
 /**
@@ -29,75 +12,49 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @NamedQuery(name="Fazenda.findAll", query="SELECT f FROM Fazenda f")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@fazendaId",scope=Fazenda.class)
-public class Fazenda extends AbstractTimestampEntity{
+public class Fazenda extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	//@SequenceGenerator(name="FAZENDA_ID_GENERATOR", sequenceName="FAZENDA_SEQUENCE", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;
 
 	private String nome;
 
 	@Column(name="qtd_alqueires")
-	private Integer qtdAlqueires;
-	
-	@Transient
-	private Integer id_usuario;
-	
-	//bi-directional many-to-one association to MovimentacaoGado
-	@OneToMany(mappedBy="fazenda", fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<MovimentacaoGado> movimentacaoGados;
+	private int qtdAlqueires;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JsonBackReference
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Usuario usuario;
 
-	//bi-directional many-to-one association to LoteGado
-	@OneToMany(mappedBy="fazenda", fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<LoteGado> loteGados;
+	//bi-directional many-to-one association to MovimentacaoGado
+	@OneToMany(mappedBy="fazenda")
+	private List<MovimentacaoGado> movimentacaoGados;
 
 	public Fazenda() {
 	}
-	
-	/**
-	 * @return the id_usuario
-	 */
-	public Integer getId_usuario() {
-		return this.getUsuario().getId();
-	}
 
-	/**
-	 * @param id_usuario the id_usuario to set
-	 */
-	public void setId_usuario(Integer id_usuario) {
-		this.id_usuario = id_usuario;
-	}
-
-	/**
-	 * @return the movimentacaoGados
-	 */
-	public List<MovimentacaoGado> getMovimentacaoGados() {
-		return movimentacaoGados;
-	}
-
-	/**
-	 * @param movimentacaoGados the movimentacaoGados to set
-	 */
-	public void setMovimentacaoGados(List<MovimentacaoGado> movimentacaoGados) {
-		this.movimentacaoGados = movimentacaoGados;
-	}
-
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Date getCreated() {
+		return this.created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 	public String getNome() {
@@ -108,14 +65,22 @@ public class Fazenda extends AbstractTimestampEntity{
 		this.nome = nome;
 	}
 
-	public Integer getQtdAlqueires() {
+	public int getQtdAlqueires() {
 		return this.qtdAlqueires;
 	}
 
-	public void setQtdAlqueires(Integer qtdAlqueires) {
+	public void setQtdAlqueires(int qtdAlqueires) {
 		this.qtdAlqueires = qtdAlqueires;
 	}
-	
+
+	public Date getUpdated() {
+		return this.updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
@@ -124,26 +89,26 @@ public class Fazenda extends AbstractTimestampEntity{
 		this.usuario = usuario;
 	}
 
-	public List<LoteGado> getLoteGados() {
-		return this.loteGados;
+	public List<MovimentacaoGado> getMovimentacaoGados() {
+		return this.movimentacaoGados;
 	}
 
-	public void setLoteGados(List<LoteGado> loteGados) {
-		this.loteGados = loteGados;
+	public void setMovimentacaoGados(List<MovimentacaoGado> movimentacaoGados) {
+		this.movimentacaoGados = movimentacaoGados;
 	}
 
-	public LoteGado addLoteGado(LoteGado loteGado) {
-		getLoteGados().add(loteGado);
-		loteGado.setFazenda(this);
+	public MovimentacaoGado addMovimentacaoGado(MovimentacaoGado movimentacaoGado) {
+		getMovimentacaoGados().add(movimentacaoGado);
+		movimentacaoGado.setFazenda(this);
 
-		return loteGado;
+		return movimentacaoGado;
 	}
 
-	public LoteGado removeLoteGado(LoteGado loteGado) {
-		getLoteGados().remove(loteGado);
-		loteGado.setFazenda(null);
+	public MovimentacaoGado removeMovimentacaoGado(MovimentacaoGado movimentacaoGado) {
+		getMovimentacaoGados().remove(movimentacaoGado);
+		movimentacaoGado.setFazenda(null);
 
-		return loteGado;
+		return movimentacaoGado;
 	}
 
 }

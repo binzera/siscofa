@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import br.gms.siscofa.infra.web.Resultado;
 import br.gms.siscofa.model.Fazenda;
-import br.gms.siscofa.model.LoteGado;
-import br.gms.siscofa.model.MovimentacaoGado;
 import br.gms.siscofa.model.Usuario;
 import br.gms.siscofa.model.repository.UsuarioRepository;
 
@@ -29,8 +27,6 @@ public class UsuarioService {
 		} else if (lista.get(0).getSenha().equals(user.getSenha())) {
 			usuario = lista.get(0);
 			usuario.setFazendas(new ArrayList<Fazenda>());
-			usuario.setLoteGados(new ArrayList<LoteGado>());
-			usuario.setMovimentacaoGados(new ArrayList<MovimentacaoGado>());
 			retorno = new String("LOGIN_SUCESSO");
 		} else {
 			retorno = new String("SENHA_INCORRETA");

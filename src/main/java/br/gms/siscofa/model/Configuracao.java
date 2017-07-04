@@ -2,11 +2,11 @@ package br.gms.siscofa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
- * The persistent class for the configuracao database table.
+ * The persistent class for the Configuracao database table.
  * 
  */
 @Entity
@@ -15,50 +15,50 @@ public class Configuracao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CONFIGURACAO_ID_GENERATOR", sequenceName="HIBERNATE_SEQUENCE", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="CONFIGURACAO_ID_GENERATOR")
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dt_ultima_sincronizacao")
-	private Timestamp dtUltimaSincronizacao;
+	private Date dtUltimaSincronizacao;
 
 	@Column(name="id_app")
-	private Integer idApp;
+	private int idApp;
 
-	private Integer usuario;
+	private int usuario;
 
 	public Configuracao() {
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Timestamp getDtUltimaSincronizacao() {
+	public Date getDtUltimaSincronizacao() {
 		return this.dtUltimaSincronizacao;
 	}
 
-	public void setDtUltimaSincronizacao(Timestamp dtUltimaSincronizacao) {
+	public void setDtUltimaSincronizacao(Date dtUltimaSincronizacao) {
 		this.dtUltimaSincronizacao = dtUltimaSincronizacao;
 	}
 
-	public Integer getIdApp() {
+	public int getIdApp() {
 		return this.idApp;
 	}
 
-	public void setIdApp(Integer idApp) {
+	public void setIdApp(int idApp) {
 		this.idApp = idApp;
 	}
 
-	public Integer getUsuario() {
+	public int getUsuario() {
 		return this.usuario;
 	}
 
-	public void setUsuario(Integer usuario) {
+	public void setUsuario(int usuario) {
 		this.usuario = usuario;
 	}
 
