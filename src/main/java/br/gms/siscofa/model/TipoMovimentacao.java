@@ -27,7 +27,7 @@ public class TipoMovimentacao implements Serializable {
 
 	//bi-directional many-to-one association to MovimentacaoGado
 	@OneToMany(mappedBy="tipoMovimentacao")
-	@JsonManagedReference
+	@JsonManagedReference("tipoMov")
 	private List<MovimentacaoGado> movimentacaoGados;
 
 	public TipoMovimentacao() {

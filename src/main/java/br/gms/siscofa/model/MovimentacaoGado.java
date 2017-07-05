@@ -45,7 +45,7 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 	//bi-directional many-to-one association to TipoMovimentacao
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipo_movimentacao_id")
-	@JsonBackReference
+	@JsonBackReference("tipoMov")
 	private TipoMovimentacao tipoMovimentacao;
 
 	public MovimentacaoGado() {
