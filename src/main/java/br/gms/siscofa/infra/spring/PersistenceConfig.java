@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jndi.JndiTemplate;
@@ -29,6 +30,7 @@ public class PersistenceConfig {
 	private Logger logger = Logger.getLogger(getClass());
 
 	@Bean
+	@Profile("dev")
 	public DataSource dataSource() {
 //		 DriverManagerDataSource dataSource = new DriverManagerDataSource();
 //		 dataSource.setDriverClassName(environment.getProperty("db.driver"));
@@ -48,20 +50,25 @@ public class PersistenceConfig {
 	}
 
 	@Bean
-	public LocalSessionFactoryBean sessionFactory() {
+	public LocalSessionFactoryBean sessionFactory(Properties properties) {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory
 				.setPackagesToScan(new String[] { "br.gms.siscofa.model" });
 
+		sessionFactory.setHibernateProperties(properties);
+
+		return sessionFactory;
+	}
+	
+	@Bean
+	public Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.show_sql", "true");
 		properties.setProperty("hibernate.dialect",
 				environment.getProperty("hibernate.dialect"));
-
-		sessionFactory.setHibernateProperties(properties);
-
-		return sessionFactory;
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		return properties;
 	}
 
 	@Bean

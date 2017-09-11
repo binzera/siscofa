@@ -1,13 +1,20 @@
 package br.gms.siscofa.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 /**
@@ -17,6 +24,7 @@ import java.util.Date;
 @Entity
 @Table(name="movimentacao_gado")
 @NamedQuery(name="MovimentacaoGado.findAll", query="SELECT m FROM MovimentacaoGado m")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class MovimentacaoGado extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +32,11 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
+	@JsonFormat(
+		shape = JsonFormat.Shape.STRING,
+		pattern = "dd/MM/yyyy"
+	)
 	private Date data;
 
 	private int idade;
@@ -45,7 +57,6 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 	//bi-directional many-to-one association to TipoMovimentacao
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipo_movimentacao_id")
-	@JsonBackReference("tipoMov")
 	private TipoMovimentacao tipoMovimentacao;
 
 	public MovimentacaoGado() {

@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import br.gms.siscofa.infra.model.BaseCRUDRepository;
+import br.gms.siscofa.model.Fazenda;
 import br.gms.siscofa.model.MovimentacaoGado;
 
 @Repository
@@ -15,6 +16,20 @@ public class MovimentacaoGadoRepository extends BaseCRUDRepository<MovimentacaoG
 	public List<MovimentacaoGado> consultarTodos() {
 		Query query = getSession().createQuery("from MovimentacaoGado");
 		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MovimentacaoGado> consultarPorFazenda(Fazenda faz) {
+		StringBuffer ql = new StringBuffer();
+		ql.append("  from MovimentacaoGado f ");
+		ql.append(" where f.fazenda = :fazenda ");
+
+		Query query = getSession().createQuery(ql.toString());
+		query.setParameter("fazenda", faz);
+
+		List<MovimentacaoGado> results = query.list();
+
+		return results;
 	}
 
 }

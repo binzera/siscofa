@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @ComponentScan(basePackages = "br.gms.siscofa")
 @EnableScheduling
-@Import(value = { PersistenceConfig.class}) //, SecurityConfig.class })
+@Import(value = { PersistenceConfig.class, JPAProductionConfiguration.class}) //, SecurityConfig.class })
 public class MainConfig {
 
 }

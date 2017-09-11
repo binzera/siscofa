@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.List;
 
@@ -27,7 +31,7 @@ public class TipoMovimentacao implements Serializable {
 
 	//bi-directional many-to-one association to MovimentacaoGado
 	@OneToMany(mappedBy="tipoMovimentacao")
-	@JsonManagedReference("tipoMov")
+	@JsonBackReference
 	private List<MovimentacaoGado> movimentacaoGados;
 
 	public TipoMovimentacao() {
