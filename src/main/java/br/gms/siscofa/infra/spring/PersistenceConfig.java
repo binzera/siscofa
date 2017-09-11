@@ -27,8 +27,6 @@ public class PersistenceConfig {
 	@Autowired
 	private Environment environment;
 
-	private Logger logger = Logger.getLogger(getClass());
-
 	@Bean
 	@Profile("dev")
 	public DataSource dataSource() {
@@ -44,7 +42,7 @@ public class PersistenceConfig {
 			dataSource = (DataSource) jndi
 					.lookup("java:jboss/datasources/SiscofaMysql");
 		} catch (NamingException e) {
-			logger.error("NamingException for java:jboss/datasources/SiscofaMysql", e);
+			System.out.println("NamingException for java:jboss/datasources/SiscofaMysql" + e);
 		}
 		return dataSource;
 	}
@@ -62,6 +60,7 @@ public class PersistenceConfig {
 	}
 	
 	@Bean
+	@Profile("dev")
 	public Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.show_sql", "true");
