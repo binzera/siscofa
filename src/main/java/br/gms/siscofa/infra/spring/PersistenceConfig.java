@@ -28,12 +28,6 @@ public class PersistenceConfig {
 	@Bean
 	@Profile("dev")
 	public DataSource dataSource() {
-//		 DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//		 dataSource.setDriverClassName(environment.getProperty("db.driver"));
-//		 dataSource.setUrl(environment.getProperty("db.url"));
-//		 dataSource.setUsername(environment.getProperty("db.username"));
-//		 dataSource.setPassword(environment.getProperty("db.password"));
-
 		DataSource dataSource = null;
 		JndiTemplate jndi = new JndiTemplate();
 		try {
@@ -46,9 +40,9 @@ public class PersistenceConfig {
 	}
 
 	@Bean
-	public LocalSessionFactoryBean sessionFactory(Properties properties) {
+	public LocalSessionFactoryBean sessionFactory(DataSource dataSource, Properties properties) {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource());
+		sessionFactory.setDataSource(dataSource);
 		sessionFactory
 				.setPackagesToScan(new String[] { "br.gms.siscofa.model" });
 
