@@ -3,6 +3,7 @@ package br.gms.siscofa.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,10 +31,19 @@ public class UsuarioController {
 		return usuarioService.cadastrarUsuario(entity);
 	}
 	
-	@RequestMapping(value="/testeHibernate" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@Transactional
 	@ResponseBody
-	public String testar() {
-		return usuarioService.testeHibernate();
+	@RequestMapping("/url-magica-maluca-oaj")
+	public String urlMagicaMaluca() {
+		Usuario usuario = new Usuario(); 
+		usuario.setNome("Glaubert");
+		usuario.setEmail("binzera@gmail.com");
+		usuario.setSenha("soh");
+		usuario.setUsuario("binzera");
+		
+		usuarioService.cadastrarUsuario(usuario);
+		
+		return "Url Mágica executada";
 	}
 
 }
