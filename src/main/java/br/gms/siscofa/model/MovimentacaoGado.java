@@ -12,9 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 /**
@@ -32,11 +33,11 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	//@Temporal(TemporalType.DATE)
-	@JsonFormat(
-		shape = JsonFormat.Shape.STRING,
-		pattern = "dd/MM/yyyy"
-	)
+	@Temporal(TemporalType.DATE)
+//	@JsonFormat(
+//		shape = JsonFormat.Shape.STRING,
+//		pattern = "dd/MM/yyyy"
+//	)
 	private Date data;
 
 	private int idade;
