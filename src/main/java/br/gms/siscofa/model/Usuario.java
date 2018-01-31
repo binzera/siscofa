@@ -1,11 +1,7 @@
 package br.gms.siscofa.model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.util.Date;
 import java.util.List;
 
@@ -15,13 +11,17 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="usuario")
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
-public class Usuario extends AbstractTimestampEntity implements Serializable {
+public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;
 
 	private String email;
 
@@ -29,22 +29,32 @@ public class Usuario extends AbstractTimestampEntity implements Serializable {
 
 	private String senha;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated;
+
 	private String usuario;
 
 	//bi-directional many-to-one association to Fazenda
 	@OneToMany(mappedBy="usuario")
-	@JsonManagedReference
 	private List<Fazenda> fazendas;
 
 	public Usuario() {
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Date getCreated() {
+		return this.created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 	public String getEmail() {
@@ -69,6 +79,14 @@ public class Usuario extends AbstractTimestampEntity implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Date getUpdated() {
+		return this.updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 	public String getUsuario() {

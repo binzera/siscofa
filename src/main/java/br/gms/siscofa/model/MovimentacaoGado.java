@@ -1,21 +1,8 @@
 package br.gms.siscofa.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 /**
@@ -25,35 +12,40 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name="movimentacao_gado")
 @NamedQuery(name="MovimentacaoGado.findAll", query="SELECT m FROM MovimentacaoGado m")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
-public class MovimentacaoGado extends AbstractTimestampEntity implements Serializable {
+public class MovimentacaoGado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;
+
 	@Temporal(TemporalType.DATE)
-//	@JsonFormat(
-//		shape = JsonFormat.Shape.STRING,
-//		pattern = "dd/MM/yyyy"
-//	)
 	private Date data;
 
-	private int idade;
+	private int excluido;
 
 	private double peso;
 
 	private int quantidade;
 
-	private Character sexo;
+	private String sexo;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated;
 
 	private double valor;
 
 	//bi-directional many-to-one association to Fazenda
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
 	private Fazenda fazenda;
+
+	//bi-directional many-to-one association to IdadeGado
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idade_gado_id")
+	private IdadeGado idadeGado;
 
 	//bi-directional many-to-one association to TipoMovimentacao
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -71,6 +63,14 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 		this.id = id;
 	}
 
+	public Date getCreated() {
+		return this.created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
 	public Date getData() {
 		return this.data;
 	}
@@ -79,12 +79,12 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 		this.data = data;
 	}
 
-	public int getIdade() {
-		return this.idade;
+	public int getExcluido() {
+		return this.excluido;
 	}
 
-	public void setIdade(int idade) {
-		this.idade = idade;
+	public void setExcluido(int excluido) {
+		this.excluido = excluido;
 	}
 
 	public double getPeso() {
@@ -103,12 +103,20 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 		this.quantidade = quantidade;
 	}
 
-	public Character getSexo() {
+	public String getSexo() {
 		return this.sexo;
 	}
 
-	public void setSexo(Character sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+
+	public Date getUpdated() {
+		return this.updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 	public double getValor() {
@@ -125,6 +133,14 @@ public class MovimentacaoGado extends AbstractTimestampEntity implements Seriali
 
 	public void setFazenda(Fazenda fazenda) {
 		this.fazenda = fazenda;
+	}
+
+	public IdadeGado getIdadeGado() {
+		return this.idadeGado;
+	}
+
+	public void setIdadeGado(IdadeGado idadeGado) {
+		this.idadeGado = idadeGado;
 	}
 
 	public TipoMovimentacao getTipoMovimentacao() {

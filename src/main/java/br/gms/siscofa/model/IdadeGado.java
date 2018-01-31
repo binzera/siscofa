@@ -6,13 +6,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the tipo_movimentacao database table.
+ * The persistent class for the idade_gado database table.
  * 
  */
 @Entity
-@Table(name="tipo_movimentacao")
-@NamedQuery(name="TipoMovimentacao.findAll", query="SELECT t FROM TipoMovimentacao t")
-public class TipoMovimentacao implements Serializable {
+@Table(name="idade_gado")
+@NamedQuery(name="IdadeGado.findAll", query="SELECT i FROM IdadeGado i")
+public class IdadeGado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,10 +22,10 @@ public class TipoMovimentacao implements Serializable {
 	private String descricao;
 
 	//bi-directional many-to-one association to MovimentacaoGado
-	@OneToMany(mappedBy="tipoMovimentacao")
+	@OneToMany(mappedBy="idadeGado")
 	private List<MovimentacaoGado> movimentacaoGados;
 
-	public TipoMovimentacao() {
+	public IdadeGado() {
 	}
 
 	public int getId() {
@@ -54,14 +54,14 @@ public class TipoMovimentacao implements Serializable {
 
 	public MovimentacaoGado addMovimentacaoGado(MovimentacaoGado movimentacaoGado) {
 		getMovimentacaoGados().add(movimentacaoGado);
-		movimentacaoGado.setTipoMovimentacao(this);
+		movimentacaoGado.setIdadeGado(this);
 
 		return movimentacaoGado;
 	}
 
 	public MovimentacaoGado removeMovimentacaoGado(MovimentacaoGado movimentacaoGado) {
 		getMovimentacaoGados().remove(movimentacaoGado);
-		movimentacaoGado.setTipoMovimentacao(null);
+		movimentacaoGado.setIdadeGado(null);
 
 		return movimentacaoGado;
 	}
