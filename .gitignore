@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-/target/
-=======
 /target/*
 *.class
+/target/
+.project
 
-
->>>>>>> branch 'master' of https://github.com/binzera/siscofa.git
