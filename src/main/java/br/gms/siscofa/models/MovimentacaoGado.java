@@ -1,8 +1,18 @@
 package br.gms.siscofa.models;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -12,15 +22,12 @@ import java.util.Date;
 @Entity
 @Table(name="movimentacao_gado")
 @NamedQuery(name="MovimentacaoGado.findAll", query="SELECT m FROM MovimentacaoGado m")
-public class MovimentacaoGado implements Serializable {
+public class MovimentacaoGado extends AbstractTimestampEntity{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
 
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -32,9 +39,6 @@ public class MovimentacaoGado implements Serializable {
 	private int quantidade;
 
 	private String sexo;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated;
 
 	private double valor;
 
@@ -61,14 +65,6 @@ public class MovimentacaoGado implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Date getCreated() {
-		return this.created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
 	}
 
 	public Date getData() {
@@ -109,14 +105,6 @@ public class MovimentacaoGado implements Serializable {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
-	}
-
-	public Date getUpdated() {
-		return this.updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
 	}
 
 	public double getValor() {

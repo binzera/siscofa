@@ -4,7 +4,7 @@ public class Resultado {
 	
 	private Object dados;
 	private String mensagem;
-	private boolean sucesso;
+	private boolean sucesso = true;
 	
 	public Resultado(Object dados, String mensagem, boolean sucesso) {
 		setDados(dados);
