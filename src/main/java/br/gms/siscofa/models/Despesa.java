@@ -2,6 +2,11 @@ package br.gms.siscofa.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.Date;
 
 
@@ -12,6 +17,8 @@ import java.util.Date;
 @Entity
 @Table(name="despesa")
 @NamedQuery(name="Despesa.findAll", query="SELECT d FROM Despesa d")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Despesa implements Serializable {
 	private static final long serialVersionUID = 1L;
 

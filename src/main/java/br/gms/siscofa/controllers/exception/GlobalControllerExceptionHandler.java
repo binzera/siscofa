@@ -1,4 +1,4 @@
-package br.gms.siscofa.conf.exception;
+package br.gms.siscofa.controllers.exception;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.gms.siscofa.models.Resultado;
 
@@ -17,7 +18,7 @@ public class GlobalControllerExceptionHandler {
 
     public static final String DEFAULT_ERROR_VIEW = "error";
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = RuntimeException.class)
     @ResponseBody
     public Resultado defaultErrorHandler(HttpServletRequest req, HttpServletResponse response, Exception e)
 	    throws Exception {

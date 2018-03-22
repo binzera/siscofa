@@ -3,6 +3,10 @@ package br.gms.siscofa.models;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 /**
  * The persistent class for the funcionario database table.
@@ -11,6 +15,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="funcionario")
 @NamedQuery(name="Funcionario.findAll", query="SELECT f FROM Funcionario f")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Funcionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 

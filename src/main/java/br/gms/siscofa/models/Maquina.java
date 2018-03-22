@@ -3,6 +3,10 @@ package br.gms.siscofa.models;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 /**
  * The persistent class for the maquina database table.
@@ -11,6 +15,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="maquina")
 @NamedQuery(name="Maquina.findAll", query="SELECT m FROM Maquina m")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Maquina implements Serializable {
 	private static final long serialVersionUID = 1L;
 
