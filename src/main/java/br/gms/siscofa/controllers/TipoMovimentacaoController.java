@@ -9,22 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.gms.siscofa.daos.MovimentacaoGadoDAO;
-import br.gms.siscofa.models.Fazenda;
-import br.gms.siscofa.models.MovimentacaoGado;
+import br.gms.siscofa.daos.TipoMovimentacaoDAO;
 import br.gms.siscofa.models.Resultado;
-import br.gms.siscofa.models.Usuario;
+import br.gms.siscofa.models.TipoMovimentacao;
+
 
 @Controller
-@RequestMapping("/movimentacao")
-public class MovimentacaoGadoController {
-	
+@RequestMapping("/tipoMovimentacao")
+public class TipoMovimentacaoController {
+
 	@Autowired
-	private MovimentacaoGadoDAO dao;
+	private TipoMovimentacaoDAO dao;
 	
 	@RequestMapping(value="/listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado fazendas() {
+	public Resultado listar() {
 		return new Resultado(dao.list());
 	}
 
@@ -40,34 +39,32 @@ public class MovimentacaoGadoController {
 	
 	@RequestMapping(value="/incluir" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado cadastrarMovimentacao(@RequestBody MovimentacaoGado mov) {
-		return new Resultado((Object) dao.incluir(mov));
+	public Resultado incluir(@RequestBody TipoMovimentacao tipoMov) {
+		return new Resultado((Object) dao.incluir(tipoMov));
 	}
 	
 	@RequestMapping(value="/excluir" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado excluirMovimentacao(@RequestBody MovimentacaoGado mov) {
+	public Resultado excluir(@RequestBody TipoMovimentacao tipoMov) {
 		try {
-			dao.excluir(mov);
-			return new Resultado(null, "Movimentação excluída com sucesso");
+			dao.excluir(tipoMov);
+			return new Resultado(null, "TipoMovimentação excluída com sucesso");
 		} catch (Exception e) {
-			Resultado resultado = new Resultado(null, "Erro ao exluir movimentação. detalhes: " + e.getMessage());
+			Resultado resultado = new Resultado(null, "Erro ao exluir o tipo movimentação. detalhes: " + e.getMessage());
 			resultado.setSucesso(false);
 			return resultado;
 		}
 	}
 	
-	@RequestMapping(value="/porFazenda" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/alterar" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado getMovimentacoesPorFazenda(Fazenda faz) {
-		return new Resultado(dao.getMovimentacoesDaFazenda(faz));
+	public Resultado alterar(@RequestBody TipoMovimentacao tipoMov) {
+		try {
+			return new Resultado(dao.alterar(tipoMov), "TipoMovimentação alterada com sucesso");
+		} catch (Exception e) {
+			Resultado resultado = new Resultado(null, "Erro ao alterar o tipo movimentação. detalhes: " + e.getMessage());
+			resultado.setSucesso(false);
+			return resultado;
+		}
 	}
-	
-	
-	@RequestMapping(value="/porUsuario" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Resultado getMovimentacoesPorUsuario(Usuario user) {
-		return new Resultado(dao.getMovimentacoesDoUsuario(user));
-	}
-
 }

@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.gms.siscofa.daos.MovimentacaoGadoDAO;
+import br.gms.siscofa.daos.DespesaDAO;
+import br.gms.siscofa.models.Despesa;
 import br.gms.siscofa.models.Fazenda;
-import br.gms.siscofa.models.MovimentacaoGado;
 import br.gms.siscofa.models.Resultado;
-import br.gms.siscofa.models.Usuario;
 
 @Controller
-@RequestMapping("/movimentacao")
-public class MovimentacaoGadoController {
+@RequestMapping("/despesa")
+public class DespesaController {
+
 	
 	@Autowired
-	private MovimentacaoGadoDAO dao;
+	private DespesaDAO dao;
 	
 	@RequestMapping(value="/listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado fazendas() {
+	public Resultado listar() {
 		return new Resultado(dao.list());
 	}
 
@@ -40,18 +40,30 @@ public class MovimentacaoGadoController {
 	
 	@RequestMapping(value="/incluir" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado cadastrarMovimentacao(@RequestBody MovimentacaoGado mov) {
-		return new Resultado((Object) dao.incluir(mov));
+	public Resultado incluir(@RequestBody Despesa despesa) {
+		return new Resultado((Object) dao.incluir(despesa));
 	}
 	
 	@RequestMapping(value="/excluir" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado excluirMovimentacao(@RequestBody MovimentacaoGado mov) {
+	public Resultado excluir(@RequestBody Despesa despesa) {
 		try {
-			dao.excluir(mov);
-			return new Resultado(null, "Movimentação excluída com sucesso");
+			dao.excluir(despesa);
+			return new Resultado(null, "Despesa excluída com sucesso");
 		} catch (Exception e) {
-			Resultado resultado = new Resultado(null, "Erro ao exluir movimentação. detalhes: " + e.getMessage());
+			Resultado resultado = new Resultado(null, "Erro ao exluir despesa. detalhes: " + e.getMessage());
+			resultado.setSucesso(false);
+			return resultado;
+		}
+	}
+	
+	@RequestMapping(value="/alterar" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Resultado alterar(@RequestBody Despesa despesa) {
+		try {
+			return new Resultado(dao.alterar(despesa), "Despesa alterada com sucesso");
+		} catch (Exception e) {
+			Resultado resultado = new Resultado(null, "Erro ao alterar a despesa. detalhes: " + e.getMessage());
 			resultado.setSucesso(false);
 			return resultado;
 		}
@@ -59,15 +71,7 @@ public class MovimentacaoGadoController {
 	
 	@RequestMapping(value="/porFazenda" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resultado getMovimentacoesPorFazenda(Fazenda faz) {
-		return new Resultado(dao.getMovimentacoesDaFazenda(faz));
+	public Resultado getDespesasDaFazenda(Fazenda faz) {
+		return new Resultado(dao.getDespesasDaFazenda(faz));
 	}
-	
-	
-	@RequestMapping(value="/porUsuario" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Resultado getMovimentacoesPorUsuario(Usuario user) {
-		return new Resultado(dao.getMovimentacoesDoUsuario(user));
-	}
-
 }
