@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -28,7 +29,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name="fazenda")
 @NamedQuery(name="Fazenda.findAll", query="SELECT f FROM Fazenda f")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Fazenda.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Fazenda extends AbstractTimestampEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -57,7 +58,7 @@ public class Fazenda extends AbstractTimestampEntity implements Serializable {
 	private Usuario usuario;
 
 	//bi-directional many-to-one association to Funcionario
-	@OneToMany(mappedBy="fazenda")
+	@OneToMany(mappedBy="fazenda")	
 	private List<Funcionario> funcionarios;
 
 	//bi-directional many-to-one association to Maquina

@@ -6,6 +6,9 @@ public class Resultado {
 	private String mensagem;
 	private boolean sucesso = true;
 	
+	public Resultado() {
+	}
+	
 	public Resultado(Object dados, String mensagem, boolean sucesso) {
 		setDados(dados);
 		setMensagem(mensagem);

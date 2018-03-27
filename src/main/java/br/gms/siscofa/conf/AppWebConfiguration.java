@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -59,6 +60,17 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LocaleChangeInterceptor());
 	}
+	
+	@Bean
+    public RestTemplate restTemplate(){
+		
+//	    List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+//	    messageConverters.add(new FormHttpMessageConverter());
+//	    messageConverters.add(new StringHttpMessageConverter());
+//	    messageConverters.add(new MappingJacksonHttpMessageConverter());
+//	    restTemplate.setMessageConverters(messageConverters);
+        return new RestTemplate();
+    }
 }
 
 

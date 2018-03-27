@@ -17,7 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name="despesa")
 @NamedQuery(name="Despesa.findAll", query="SELECT d FROM Despesa d")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Despesa implements Serializable {
 	private static final long serialVersionUID = 1L;
